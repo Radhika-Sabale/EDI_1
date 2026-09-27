@@ -1,0 +1,19 @@
+Satrt date for timeseries - 2024-01-01
+
+Legal or illegal
+Your logic is right in principle — flag a location as "mining" via your model, then cross-reference it against a legal registry: no match = presumed unauthorized. That's a sound methodology *if* the registry exists and is reasonably complete. The catch is it exists for some of your 5 countries and basically doesn't for others.
+
+**Brazil — yes, solid.** SIGMINE (Sistema de Informações Geográficas da Mineração), run by Brazil's National Mining Agency (ANM), is a public, actively-maintained registry of all legally authorized mining operations with coordinates, mineral type, and permit status. This is genuinely usable — you could pull it as a shapefile/GIS layer and overlay it in the same script where you already do spatial exclusion.
+
+**Australia — yes, also solid,** but at the *state* level rather than one national dataset. E.g. Victoria publishes "Current Mining Licences and Leases" as an open GIS layer; Queensland, WA, and NSW each have their own equivalents. Since you're already sourcing 25 Australian sites, you'd need to know which state(s) they fall in and pull the matching registry. One catch: since Australian mining is tightly regulated and illegal mining isn't much of a documented problem there, almost everything you flag in Australia will likely match the legal registry — which is fine, it's basically a built-in negative control, but don't expect Australia to contribute much to your "illegal" class.
+
+**Indonesia — probably exists but I can't confirm it's cleanly usable.** Indonesia's ESDM ministry runs MODI (Minerba One Data Indonesia), which is supposed to list licensed IUP (mining permit) holders. I haven't verified whether it's downloadable as structured GIS data or just a lookup portal — worth checking directly before you plan around it.
+
+**South Africa — no, not usable.** Their official system (SAMRAD) is widely reported as broken — public GIS access was disabled years ago, and even industry insiders can't reliably query it. There's no functioning public legal-mining cadastre here right now.
+
+**India — no unified public version.** Mining leases require geo-referenced cadastral maps to be *submitted* to the Indian Bureau of Mines, but that's an internal regulatory requirement, not published open data. A few individual states have partial GIS mining-tenement portals, but there's no single national dataset you could pull the way you can for Brazil.
+
+**One important methodological caveat, regardless of country:** "not found in the legal registry" isn't proof of illegal — it could also mean the registry has a data gap, the permit is mid-application, or (for Indonesia/India especially) small-scale/artisanal operations that are technically licensed just aren't well-digitized. So in your paper, phrase this as "unmatched to the legal registry" or "presumed unauthorized," not a hard ground-truth "illegal" label — a reviewer will ask about registry completeness, and you want to have already addressed it rather than get caught by it.
+
+Given that split, a realistic plan: do the legal/illegal overlay properly for Brazil and Australia (2 of 5, and your two best-documented mining datasets anyway), keep the other 3 countries under the general "mining disturbance" framing, and state the registry-coverage limitation explicitly. That's a stronger, more honest paper than reaching for a uniform illegal/legal label you can't actually support everywhere.
+
