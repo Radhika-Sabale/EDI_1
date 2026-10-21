@@ -24,6 +24,8 @@ Illegal Mining Detection/
 │   ├── 07_compute_derived_features.py      # Computes delta features, rolling stats, and feature engineering
 │   ├── 08_train_test_split.py              # Splits dataset into stratified train/val/test splits
 │   ├── 09_metrics_pipeline.py              # Evaluates sequence metrics and model performance
+│   ├── 10_baseline_classical.py            # Classical baselines: Logistic Regression & Random Forest
+│   ├── 11_baseline_lstm.py                 # Plain sequence baseline: LSTM model without attention
 │   ├── connect.py                          # Earth Engine connectivity verification script
 │   ├── Dedupe timeseries.py                # Time-series deduplication utility
 │   ├── diagnose_vh_gap.py                  # SAR Sentinel-1 VH gap diagnostic script
@@ -38,6 +40,24 @@ Illegal Mining Detection/
 │   ├── features_sequences.npz              # Extracted feature tensors
 │   ├── scaler_params.npz                   # Fitted feature scaling parameters
 │   └── train_test_split.npz                # Stratified train/val/test dataset split
+├── Model/
+│   ├── 01_attention_fusion.py              # Main LSTM + Temporal Attention model & attention weight extractor
+│   ├── 02_multiseed_evaluation.py          # 10-repeat stratified multi-seed benchmark across all 4 initial models
+│   ├── 03_handcrafted_features_baselines.py# 22 hand-crafted summary features evaluated on LR & RF
+│   ├── 04_tune_attention_model.py          # 5-fold CV tuning of LSTM & Transformer architectures on training data
+│   ├── 05_seed_ensemble.py                 # 5-model seed ensemble for variance reduction and probability smoothing
+│   ├── plot_attention.py                   # Generates temporal attention distribution plots
+│   ├── attention_plot.png                  # Visualized attention curves (mining vs non-mining)
+│   ├── attention_weights_test.npz          # Extracted per-month attention weights for test locations
+│   ├── multiseed_results.csv               # Detailed 10-seed metrics for initial models
+│   ├── multiseed_summary.csv               # Aggregated mean +/- std benchmark summary
+│   ├── handcrafted_results.csv             # Detailed results for handcrafted feature baselines
+│   ├── handcrafted_summary.csv             # Summary table for handcrafted feature baselines
+│   ├── tuning_cv_results.csv               # 5-fold CV hyperparameter & architecture search results
+│   ├── tuned_model_evaluation.csv          # Single test set evaluation of the winning tuned model
+│   ├── tuned_multiseed_summary.csv         # 10-seed repeat summary for the winning tuned model
+│   ├── ensemble_results.csv                # Detailed 10-seed metrics comparing single vs ensemble
+│   └── ensemble_summary.csv                # Win/loss/tie and mean +/- std summary for the seed ensemble
 ├── .gitignore
 └── README.md
 ```

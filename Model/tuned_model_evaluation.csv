@@ -1,0 +1,2 @@
+configuration,test_precision,test_recall,test_f1,test_roc_auc
+Transformer_L1_d32_h2_drop0.2_lr1e-3,0.76,0.7037037037037037,0.7307692307692307,0.8518518518518519
